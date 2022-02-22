@@ -1,0 +1,36 @@
+{
+  "name": "@orochi-network/multicast",
+  "version": "1.0.3",
+  "description": "Multicast frontend lib",
+  "types": "./build/index.d.ts",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "release": "npm run build && node ./devel.js && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orochi-network/orochi-multicast.ts.git"
+  },
+  "keywords": [
+    "multicast",
+    "multicall",
+    "evm",
+    "fantom",
+    "ethereum"
+  ],
+  "author": "chiro8x@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/orochi-network/orochi-multicast.ts/issues"
+  },
+  "homepage": "https://github.com/orochi-network/orochi-multicast.ts#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "ethers": "^5.5.4"
+  }
+}
