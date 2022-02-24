@@ -10,7 +10,12 @@ import { BytesBuffer, evenHexString } from './bytes';
 export const Erc20Interface = <ERC20Interface>new Interface(abiErc20);
 export const Erc721Interface = <ERC721Interface>new Interface(abiErc721);
 
-const deployedMulticast = new Map<number, string>([[4002, '0x2f133788fddED9A1ca10a757fECd170dE7B1EB35']]);
+const deployedMulticast = new Map<number, string>([
+  [1, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [56, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [250, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [4002, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+]);
 
 export interface ICorePayload {
   address: string;

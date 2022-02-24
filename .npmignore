@@ -2,7 +2,8 @@ docs
 test
 node_modules
 .git
-src
+src/**/*
+typechain/**/*
 tsconfig.json
 devel.js
 inc

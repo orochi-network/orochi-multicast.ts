@@ -11,11 +11,11 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "skipLibCheck": true,
-    "declaration": false,
+    "declaration": true,
     "outDir": "./build/",
     "rootDir": ".",
     "types": ["node"]
   },
   "include": ["**/*.ts"],
-  "exclude": ["built", "node_modules", "**/*.spec.ts", "**/*.test.ts", "typechain/**/*.ts"]
+  "exclude": ["build", "node_modules", "**/*.spec.ts", "**/*.test.ts", "typechain/**/*.ts"]
 }

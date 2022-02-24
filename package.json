@@ -1,9 +1,9 @@
 {
   "name": "@orochi-network/multicast",
-  "version": "1.0.4",
+  "version": "1.0.9",
   "description": "Multicast frontend lib",
-  "types": "./build/index.d.ts",
-  "main": "./build/index.js",
+  "types": "./build/src/index.d.ts",
+  "main": "./build/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
