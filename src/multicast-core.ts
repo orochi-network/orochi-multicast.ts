@@ -12,6 +12,7 @@ export const Erc721Interface = <ERC721Interface>new Interface(abiErc721);
 
 const deployedMulticast = new Map<number, string>([
   [1, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [97, '0xF43041138eDfb1CA2E602b82989093F4C52C4D69'],
   [56, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
   [250, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
   [4002, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
@@ -86,7 +87,9 @@ export class MulticastCore {
     ).replace(/^0x/gi, '');
     const result: { [key: string]: string } = {};
     for (let i = 0; i < addresses.length; i += 1) {
-      result[addresses[i]] = `0x${evenHexString(contractResult.substring(i, i + 64).replace(/^0+/, ''))}`;
+      const j = i * 64;
+      result[addresses[i]] = `0x${evenHexString(contractResult.substring(j, j + 64).replace(/^0+/, ''))}`;
+      result[addresses[i]] = result[addresses[i]] === '0x' ? '0x00' : result[addresses[i]];
     }
     return result;
   }

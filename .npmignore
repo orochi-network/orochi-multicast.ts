@@ -14,3 +14,4 @@ typedoc.json
 .typedoc-plugin-external-module-name.js
 .github
 *.log
+.DS_Store

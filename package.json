@@ -1,6 +1,6 @@
 {
   "name": "@orochi-network/multicast",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Multicast frontend lib",
   "types": "./build/src/index.d.ts",
   "main": "./build/src/index.js",
