@@ -1,21 +1,20 @@
-import { Provider } from '@ethersproject/abstract-provider';
-import { BigNumber, Contract } from 'ethers';
-import { Multicast, ERC20Interface, ERC721Interface } from '../typechain';
-import abiMulticast from './json/multicast.json';
-import { Interface } from 'ethers/lib/utils';
+import { Interface, Provider } from 'ethers';
+import { BytesBuffer, evenHexString } from './bytes';
 import abiErc20 from './json/erc20.json';
 import abiErc721 from './json/erc721.json';
-import { BytesBuffer, evenHexString } from './bytes';
+import { Multicast, Multicast__factory } from './typechain';
+import { ERC20Interface } from './typechain/ERC20';
+import { ERC721Interface } from './typechain/ERC721';
 
 export const Erc20Interface = <ERC20Interface>new Interface(abiErc20);
 export const Erc721Interface = <ERC721Interface>new Interface(abiErc721);
 
-const deployedMulticast = new Map<number, string>([
-  [1, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
-  [97, '0xF43041138eDfb1CA2E602b82989093F4C52C4D69'],
-  [56, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
-  [250, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
-  [4002, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+const deployedMulticast = new Map<BigInt, string>([
+  [1n, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [97n, '0xF43041138eDfb1CA2E602b82989093F4C52C4D69'],
+  [56n, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [250n, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
+  [4002n, '0xC82ECc4572321aa9F051443C30a0a0fA792b3798'],
 ]);
 
 export interface ICorePayload {
@@ -29,27 +28,27 @@ export interface IMulticastResult {
 }
 
 export interface IBlockchainState {
-  blockNumber: BigNumber;
+  blockNumber: BigInt;
   previousBlockHash: string;
-  difficulty: BigNumber;
-  gaslimit: BigNumber;
-  timestamp: BigNumber;
+  difficulty: BigInt;
+  gaslimit: BigInt;
+  timestamp: BigInt;
 }
 
-const instance = new Map<number, MulticastCore>();
+const instance = new Map<BigInt, MulticastCore>();
 
 export class MulticastCore {
-  public readonly chainId: number = 0;
+  public readonly chainId: BigInt = 0n;
 
   public readonly provider: Provider;
 
   private multicastInstance: Multicast;
 
-  constructor(chainId: number, provider: Provider) {
+  constructor(chainId: BigInt, provider: Provider) {
     this.chainId = chainId;
     this.provider = provider;
     if (deployedMulticast.has(chainId)) {
-      this.multicastInstance = <Multicast>new Contract(deployedMulticast.get(chainId) || '', abiMulticast, provider);
+      this.multicastInstance = Multicast__factory.connect(deployedMulticast.get(chainId) || '', provider);
     } else {
       throw new Error('MulticastCore: This network was not supported');
     }
@@ -75,7 +74,7 @@ export class MulticastCore {
       buf.writeUint16(BytesBuffer.from(data).length);
       buf.writeBytes(data);
     }
-    const result = await this.multicastInstance.callStatic.multicast(buf.invoke());
+    const result = await this.multicastInstance.multicast.staticCall(buf.invoke());
     return result.map(({ success, result }: IMulticastResult) => ({ success, result }));
   }
 
@@ -114,7 +113,7 @@ export class MulticastCore {
       buf.writeUint16(BytesBuffer.from(data).length);
       buf.writeBytes(data);
     }
-    const result = await this.multicastInstance.callStatic.cast(buf.invoke());
+    const result = await this.multicastInstance.cast.staticCall(buf.invoke());
     return result.map(({ success, result }: IMulticastResult) => ({ success, result }));
   }
 }
