@@ -1,10 +1,11 @@
-import { Interface, Provider } from 'ethers';
+import { Interface, Provider, ethers } from 'ethers';
 import { BytesBuffer, evenHexString } from './bytes';
 import abiErc20 from './json/erc20.json';
 import abiErc721 from './json/erc721.json';
-import { Multicast, Multicast__factory as MulticastFactory } from './typechain';
 import { ERC20Interface } from './typechain/ERC20';
 import { ERC721Interface } from './typechain/ERC721';
+import abiMulticast from './json/multicast.json';
+import { Multicast } from './typechain/MultiCast.sol/Multicast';
 
 export const Erc20Interface = <ERC20Interface>new Interface(abiErc20);
 export const Erc721Interface = <ERC721Interface>new Interface(abiErc721);
@@ -48,7 +49,7 @@ export class MulticastCore {
     this.chainId = chainId;
     this.provider = provider;
     if (deployedMulticast.has(chainId)) {
-      this.multicastInstance = MulticastFactory.connect(deployedMulticast.get(chainId) || '', provider);
+      this.multicastInstance = new ethers.Contract(deployedMulticast.get(chainId) || '', abiMulticast, provider) as any;
     } else {
       throw new Error('MulticastCore: This network was not supported');
     }
