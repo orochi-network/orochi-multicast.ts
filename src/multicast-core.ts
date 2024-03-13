@@ -1,4 +1,4 @@
-import { Interface, Provider, ethers } from 'ethers';
+import { Interface, Provider, Contract } from 'ethers';
 import { BytesBuffer, evenHexString } from './bytes';
 import abiErc20 from './json/erc20.json';
 import abiErc721 from './json/erc721.json';
@@ -49,7 +49,7 @@ export class MulticastCore {
     this.chainId = chainId;
     this.provider = provider;
     if (deployedMulticast.has(chainId)) {
-      this.multicastInstance = new ethers.Contract(deployedMulticast.get(chainId) || '', abiMulticast, provider) as any;
+      this.multicastInstance = new Contract(deployedMulticast.get(chainId) || '', abiMulticast, provider) as any;
     } else {
       throw new Error('MulticastCore: This network was not supported');
     }
